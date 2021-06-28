@@ -1,0 +1,23 @@
+{
+  "name": "metube",
+  "version": "1.0.0",
+  "description": "Metube Challenge Graduation Assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmnkit/metube.git"
+  },
+  "author": "Marco Kang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmnkit/metube/issues"
+  },
+  "homepage": "https://github.com/kmnkit/metube#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
+}
