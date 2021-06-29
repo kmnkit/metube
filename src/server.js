@@ -29,7 +29,7 @@ app.use(
 
 app.use(flash());
 app.use(localsMiddleware);
-app.use(routes.upload, express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 app.use(routes.static, express.static("assets"));
 app.use(routes.home, rootRouter);
 app.use(routes.users, userRouter);

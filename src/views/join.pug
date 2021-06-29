@@ -1,0 +1,24 @@
+extends templates/layout
+
+block content
+  div.form__screen
+    if errorMessage
+      p=errorMessage
+    form(method="POST").join__form
+      label(for="name") 이름
+      input(placeholder="Name", name="name", type="text", required)
+      label(for="email") 이메일
+      input(placeholder="Email", name="email", type="email", required)
+      label(for="username") 유저네임
+      input(placeholder="Username", name="username", type="text", required)
+      label(for="password") 비밀번호
+      input(placeholder="Password", name="password", type="password", required)
+      label(for="password2") 비밀번호 확인
+      input(placeholder="Confirm Password", name="password2", type="password", required)
+      label(for="location") 지역
+      input(placeholder="Location", name="location", type="text", required)
+      input(type="submit", value="Join")
+      include partials/social-login
+    div.auth-switch
+      span Already have an account? 
+      a.underline(href="/login") Log in now &rarr;

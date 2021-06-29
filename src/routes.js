@@ -5,6 +5,7 @@ const VIDEOS = "/videos";
 
 const JOIN = "/join";
 const LOGIN = "/login";
+const LOGOUT = "/logout";
 const SEARCH = "/search";
 
 const EDIT = "/edit";
@@ -28,6 +29,7 @@ const routes = {
   videos: VIDEOS,
   join: JOIN,
   login: LOGIN,
+  logout: LOGOUT,
   search: SEARCH,
   watch: WATCH,
   edit: EDIT,

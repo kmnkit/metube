@@ -23,3 +23,5 @@ rootRouter
   .get(getLogin)
   .post(postLogin);
 rootRouter.get(routes.search, search);
+
+export default rootRouter;

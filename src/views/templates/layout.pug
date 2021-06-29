@@ -1,8 +1,9 @@
 doctype html
 html(lang="en")
-    include partials/head    
-    body
+    include ../partials/head    
+    body.bg-pink-300.text-white
         include ../partials/header
-        main
-            block content
+        main.flex
+            block sidebar
+            block content            
         include ../partials/footer

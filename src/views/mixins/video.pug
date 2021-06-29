@@ -1,0 +1,13 @@
+mixin video(video)
+  div.main__video-container
+    a(href=`/videos/${video.id}`)
+      div(style=`background-image:url(${video.thumbUrl}); background-size:cover; background-position:center;`).h-40.rounded-md
+      div.video__info
+        if video.owner.avatarUrl
+          div(style=`background-image:url(${video.owner.avatarUrl}); background-size:cover; background-position:center;`).rounded-full.w-14.h-14
+        else
+          span(role="img").text-5xl 😍
+        div.video__info-text
+          span=video.title
+          p=video.owner.username
+          p=calcDate(video.createdAt)

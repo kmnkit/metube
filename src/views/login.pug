@@ -1,0 +1,18 @@
+extends templates/layout
+
+block content
+  div.form__screen
+    if errorMessage
+      p=errorMessage
+    form(method="POST").login__form
+      label(for="username") 유저네임
+      input(placeholder="Username", name="username",type="text",required)
+      label(for="password") 비밀번호
+      input(placeholder="Password", name="password",type="password",required)
+      input(type="submit", value="Log In")
+      br
+      a(href="/users/github/start") Continue with Github &rarr;
+      include partials/social-login
+    div.auth-switch
+      span Don't have an account? 
+      a(href="/join") Create one now &rarr;

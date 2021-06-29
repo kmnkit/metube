@@ -1,0 +1,18 @@
+extends templates/layout
+
+block content
+    div.form__screen
+      if errorMessage
+        span=errorMessage
+      form(method="POST", enctype="multipart/form-data").upload__form
+        label(for="video") Video File 
+        input(type="file", accept="video/*", required, id="video", name="video")
+        label(for="thumb") Thumbnail
+        input(type="file", accept="image/*", required, id="thumb", name="thumb")
+        label(for="title") Title
+        input(placeholder="Title", required, type="text", name="title", maxlength=80)
+        label(for="description") Description
+        input(placeholder="Description", required, type="text", name="description", minlength=2)
+        label(for="hashtags") Hash Tags
+        input(placeholder="Hashtags, separated by comma.", required, type="text", name="hashtags")
+        input(type="submit", value="Upload Video")

@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main__video-container{
+  @apply w-1/4 h-40 mx-4;
+  div:last-child {
+    @apply w-52 h-16;
+  }
+}
+
+.sidebar__li{
+  @apply text-xl text-black h-10 hover:bg-pink-600;
+  i{
+    @apply mr-2;
+  }  
+}
+
+.header__avatar{
+  @apply rounded-full;
+}
+
+.smile{
+  @apply text-2xl w-14 h-14;
+}
+
+.header__menu-icon{
+  @apply mx-1 text-2xl;
+}
+
+.join__form,
+.login__form,
+.upload__form,
+.edit-profile__form{
+  input{
+    @apply w-full h-10 rounded-md text-black focus:text-indigo-600 my-1;
+  };
+  input[type="submit"]{
+    @apply bg-red-500 mt-4;
+  };
+  @apply max-w-sm;
+}
+
+.auth-switch{
+  @apply text-center mt-10;
+  a{
+    @apply underline;
+  }
+}
+
+.form__screen{
+  @apply w-full grid place-items-center;
+}
+
+.video__info{
+  @apply mt-4 items-center h-16 flex;
+}
+
+.video__info-text{
+  @apply ml-2;
+  span{
+    @apply font-bold;
+  }
+}
+

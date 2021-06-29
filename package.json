@@ -4,7 +4,13 @@
   "description": "Metube Challenge Graduation Assignment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:server": "babel src -d build",
+    "build:assets": "webpack --mode=production",
+    "dev:server": "nodemon",
+    "dev:gulp": "gulp",
+    "dev:assets": "webpack --mode=development -w"
   },
   "repository": {
     "type": "git",
@@ -37,9 +43,21 @@
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.7",
+    "autoprefixer": "^10.2.6",
+    "css-loader": "^5.2.6",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-sass": "^5.0.0",
+    "mini-css-extract-plugin": "^1.6.2",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.7",
     "prettier": "^2.3.2",
+    "sass": "^1.35.1",
+    "style-loader": "^3.0.0",
+    "tailwindcss": "^2.2.4",
     "webpack": "^5.40.0",
     "webpack-cli": "^4.7.2"
   }

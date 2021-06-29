@@ -1,1 +1,25 @@
 extends templates/layout
+
+block content
+  div.form__screen
+    if errorMessage
+      p=errorMessage
+    if loggedInUser.avatarUrl
+      img.header__avatar(src="/"+loggedInUser.avatarUrl, width="100", height="100")
+    else
+      span(role="img") 😀
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
+      label(for="avatar") Avatar
+      input(type="file", id="avatar", name="avatar", accept="image/*")
+      label(for="name") Name
+      input(placeholder="Name", name="name",type="text",required, value=loggedInUser.name)
+      label(for="email") Email
+      input(placeholder="Email", name="email",type="email",required, value=loggedInUser.email)
+      label(for="username") Username
+      input(placeholder="Username", name="username",type="text",required, value=loggedInUser.username)
+      label(for="location") Location
+      input(placeholder="Location", name="location",type="text",required, value=loggedInUser.location)
+      input(type="submit", value="Update Profile")
+      if !loggedInUser.socialOnly
+        div.edit-profile__password
+          a(href="change-password") Change Password &rarr;

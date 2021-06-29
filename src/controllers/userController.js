@@ -1,35 +1,45 @@
+import bcrypt from "bcrypt";
+import fetch from "node-fetch";
+import User from "../models/User";
 import routes from "../routes";
 
+const HTTP_BAD_REQUEST = 400;
 /**
  * Render an User's Profile Page
- * 
- * @param {express.req} req 
- * @param {express.res} res 
- * @returns 
+ *
+ * @param {express.req} req
+ * @param {express.res} res
+ * @returns
  */
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate('videos');
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
-  return res.render("users/profile", { pageTitle: `${user.name}의 profile`, user });
+  return res.render("users/profile", {
+    pageTitle: `${user.name}의 profile`,
+    user,
+  });
 };
 //#region Get and Post User join Page
 /**
  * Render a User Join Page
- * 
- * @param {express.res} res 
+ *
+ * @param {express.res} res
  */
-export const getJoin = (_, res) => res.render("join", { pageTitle: "Create Account" });
+export const getJoin = (_, res) =>
+  res.render("join", { pageTitle: "Create Account" });
 /**
  * Post a User Join
- * 
- * @param {express.req} req 
+ *
+ * @param {express.req} req
  * @param {express.res} res
  */
 export const postJoin = async (req, res) => {
-  const { body: { name, username, email, password, password2, location } } = req;
+  const {
+    body: { name, username, email, password, password2, location },
+  } = req;
   const pageTitle = "Join";
   if (password !== password2) {
     return res.status(HTTP_BAD_REQUEST).render("join", {
@@ -44,7 +54,7 @@ export const postJoin = async (req, res) => {
       pageTitle,
       errorMessage: "This username/email is already taken.",
     });
-  };
+  }
 
   try {
     await User.create({
@@ -52,13 +62,13 @@ export const postJoin = async (req, res) => {
       username,
       email,
       password,
-      location
+      location,
     });
-    res.redirect("/login");
+    return res.redirect(routes.login);
   } catch (error) {
     return res.status(HTTP_BAD_REQUEST).render("join", {
       pageTitle: "Join",
-      errorMessage: error._message
+      errorMessage: error._message,
     });
   }
 };
@@ -66,10 +76,10 @@ export const postJoin = async (req, res) => {
 //#region User Login and Logout
 /**
  * Render an User Login Page
- * 
- * @param {express.req} req 
- * @param {express.res} res 
- * @returns 
+ *
+ * @param {express.req} req
+ * @param {express.res} res
+ * @returns
  */
 export const getLogin = (req, res) => {
   if (req.session.loggedIn) {
@@ -79,37 +89,39 @@ export const getLogin = (req, res) => {
 };
 /**
  * Post a User Login
- * 
- * @param {express.req} req 
+ *
+ * @param {express.req} req
  * @param {express.res} res
  */
 export const postLogin = async (req, res) => {
   const pageTitle = "Login";
-  const { body: { username, password } } = req;
+  const {
+    body: { username, password },
+  } = req;
   const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
     return res.status(HTTP_BAD_REQUEST).render("login", {
       pageTitle,
       errorMessage: "An account with this username does not exists.",
     });
-  };
+  }
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
     return res.status(HTTP_BAD_REQUEST).render("login", {
       pageTitle,
       errorMessage: "Wrong Password",
     });
-  };
+  }
   req.session.loggedIn = true;
   req.session.user = user;
   return res.redirect(routes.home);
 };
 /**
  * Logout User
- * 
- * @param {express.req} req 
- * @param {express.res} res 
- * @returns 
+ *
+ * @param {express.req} req
+ * @param {express.res} res
+ * @returns
  */
 export const logout = (req, res) => {
   req.flash("info", "Bye Bye");
@@ -122,11 +134,12 @@ export const logout = (req, res) => {
  * Render an User's Profile Edit Page
  * @param {express.res} res
  */
-export const getEdit = (_, res) => res.render("edit-profile", { pageTitle: "Edit Profile" });
+export const getEdit = (_, res) =>
+  res.render("edit-profile", { pageTitle: "Edit Profile" });
 /**
  * Post an User's Profile Edit
- * 
- * @param {express.req} req 
+ *
+ * @param {express.req} req
  * @param {express.res} res
  */
 export const postEdit = async (req, res) => {
@@ -135,7 +148,7 @@ export const postEdit = async (req, res) => {
       user: { _id, avatarUrl, email: sessionEmail, username: sessionUsername },
     },
     body: { name, email, username, location },
-    file
+    file,
   } = req;
   let searchParam = [];
   if (sessionEmail !== email) {
@@ -154,15 +167,17 @@ export const postEdit = async (req, res) => {
     }
   }
   const isHeroku = process.env.NODE_ENV === "production";
-  const updatedUser = await User.findByIdAndUpdate(_id, {
-    avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
-    name,
-    email,
-    username,
-    location
-  },
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
     {
-      new: true
+      avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
+      name,
+      email,
+      username,
+      location,
+    },
+    {
+      new: true,
     }
   );
   req.session.user = updatedUser;
@@ -172,9 +187,9 @@ export const postEdit = async (req, res) => {
 //#region Start and Finish Social Login with Github
 /**
  * Start a Github Login
- * 
- * @param {*} res 
- * @returns 
+ *
+ * @param {*} res
+ * @returns
  */
 export const startGithubLogin = (_, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
@@ -189,10 +204,10 @@ export const startGithubLogin = (_, res) => {
 };
 /**
  * Finish a Github Login
- * @param {express.req} req 
+ * @param {express.req} req
  * @param {express.res} res
  */
-export const finishGithubLogin = (req, res) => {
+export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_CLIENT,
@@ -202,31 +217,35 @@ export const finishGithubLogin = (req, res) => {
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
 
-  const tokenRequest = await(
+  const tokenRequest = await (
     await fetch(finalUrl, {
       method: "POST",
       headers: {
         Accept: "application/json",
       },
-    })).json();
+    })
+  ).json();
   if ("access_token" in tokenRequest) {
     // Access Api
     const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
-    const userData = await(
+    const userData = await (
       await fetch(`${apiUrl}/user`, {
         headers: {
           Authorization: `token ${access_token}`,
-        }
-      })).json();
-    const emailData = await(
+        },
+      })
+    ).json();
+    const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
           Authorization: `token ${access_token}`,
-        }
-      })).json();
+        },
+      })
+    ).json();
     const emailObj = emailData.find(
-      (email) => email.primary === true && email.verified === true);
+      (email) => email.primary === true && email.verified === true
+    );
     if (!emailObj) {
       req.flash("error", "Can't finish Github Login.");
       return res.redirect("/login");
@@ -253,21 +272,23 @@ export const finishGithubLogin = (req, res) => {
 //#region Get and Post Password Change
 /**
  * Render an User's Password Change Page
- * 
- * @param {express.req} req 
+ *
+ * @param {express.req} req
  * @param {express.res} res
  */
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
     req.flash("error", "Can't change password.");
     return res.redirect("/");
-  };
-  return res.render(`${routes.users}${routes.changePw}`, { pageTitle: "Change Password" })
+  }
+  return res.render(`${routes.users}${routes.changePw}`, {
+    pageTitle: "Change Password",
+  });
 };
 /**
  * Post an User's Password Change
- * 
- * @param {express.req} req 
+ *
+ * @param {express.req} req
  * @param {express.res} res
  */
 export const postChangePassword = async (req, res) => {
@@ -275,7 +296,7 @@ export const postChangePassword = async (req, res) => {
     session: {
       user: { _id },
     },
-    body: { oldPassword, newPassword, newPasswordConfirmation }
+    body: { oldPassword, newPassword, newPasswordConfirmation },
   } = req;
   const user = await User.findById(_id);
   const ok = await bcrypt.compare(oldPassword, user.password);

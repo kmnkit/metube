@@ -1,9 +1,33 @@
-header
+header.flex.justify-between.p-2.items-center
   a(href="/")
-    i.fab.fa-youtube
-  nav
-    ul
+    i.fab.fa-youtube.text-red-600.text-5xl
+  form(method="GET")
+    input(placeholder="검색", type="text", name="keyword").mr-2.h-10.rounded-md
+    button.bg-gray-400.w-14.h-10.rounded-md
+      i.fas.fa-search
+  ul.flex
+    if loggedIn
+      li.header__menu-icon
+        a(href="/videos/upload")
+          i.fas.fa-video
+      li.header__menu-icon
+        a(href="/users/edit")
+          i.fas.fa-user-edit
+      li.header__menu-icon
+        a(href="/users/logout")
+          i.fas.fa-sign-out-alt
+      li.header__menu-icon
+        a(href=`/users/${loggedInUser._id}`)
+          if loggedInUser.avatarUrl
+            img(src="/" + loggedInUser.avatarUrl).rounded-full.w-10.h-10
+          else
+            span.smile 😀
+    else
+      li.header__menu-icon
+        a(href="/login")
+          i.fas.fa-sign-in-alt          
+      li.header__menu-icon
+        a(href="/join")
+          i.fas.fa-user-plus
       li
-        a(href="/search")
-        i.fas.fa-search
-                
+        span.smile 😀
