@@ -1,2 +1,78 @@
 extends templates/layout
+include mixins/comment
 
+block content
+  div.divide-y-3.divide-gray-100.max-w-screen-xl
+    div.w-full
+      div#videoContainer(data-id=video._id).relative
+        if isHeroku
+          video(src=`${video.fileUrl}`).compressed.bg-black
+        else
+          video(src=`/${video.fileUrl}`).compressed.bg-black
+        div#videoControls.absolute.bottom-0.w-full.px-2
+          i#playPause.fas.fa-2x.fa-play-circle
+          div
+            input(type="range",step="1", value=0, min="0")#timeline.w-full
+          span#timeSpace.invisible.text-center
+            span#currentTime 00:00
+            span  / 
+            span#totalTime 00:00        
+          i#sound.fas.fa-2x.fa-volume-up
+          input(type="range",step="0.1", value=0.5, min="0", max="1")#volumeRange
+          div#expand.text-center
+            i#fullScreen.fas.fa-2x.fa-expand
+      div
+        span.text-3xl=video.title
+        each hashtag in video.hashtags
+          span.text-3xl.text-blue-600 #{hashtag}
+        p=video.description
+        div.my-4
+          span 조회수 #{video.meta.views.toLocaleString('ko-KR')} • #{video.createdAt.getFullYear()}. #{video.createdAt.getMonth()}. #{video.createdAt.getDate()}      
+    div#author__container.my-4.relative
+      div.flex
+        div.w-20.h-20
+          if video.owner.avatarUrl
+            a(href="/users/"+video.owner._id)
+              if isHeroku
+                img#avatar__box(src=video.owner.avatarUrl)
+              else
+                img#avatar__box(src="/"+video.owner.avatarUrl)
+          else
+            span(role="img").smile 😍
+        div#uploader__info
+          a(href=`/users/${video.owner._id}`)=video.owner.name            
+          p #{video.owner.description}
+      if String(loggedInUser._id) === String(video.owner._id)
+        div#video__owner-menu
+          button
+            i.fas.fa-ellipsis-v
+          div.dropdown
+            div#btn__comment-edit
+              i.fas.fa-pencil-alt
+              a(href=`${video.id}/edit`) 편집 &rarr;
+            div#btn__comment-del
+              i.fas.fa-trash-alt
+              a(href=`${video.id}/delete`) 삭제 &rarr;
+    div
+      span 댓글 #{video.comments.length}개
+      if loggedIn
+        div.flex.mt-4.w-full.h-20.pr-4
+          div.w-14.h-14
+            if loggedInUser.avatarUrl
+              a(href="/users/"+loggedInUser._id).w-20.h-20
+                if isHeroku
+                  img#avatar__box(src=loggedInUser.atatarUrl)
+                else
+                  img#avatar__box(src="/"+loggedInUser.avatarUrl)
+          div.video__comments
+            form.video__comment-form#commentForm
+              textarea.max-w-screen-xl.w-full(placeholder="Write a nice comment...")
+              div
+                button.comment__btn 댓글
+    div.video__comments
+      each comment in video.comments
+        +commentBox(comment, video.id)
+block scripts
+  script(src="/static/js/videoPlayer.js")
+  if loggedIn
+    script(src="/static/js/commentSection.js")

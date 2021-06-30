@@ -1,1 +1,9 @@
 extends templates/layout
+include mixins/video
+block sidebar
+  include partials/sidebar
+block content
+  each video in videos
+    +video(video)
+  else
+    span.empty__message No videos found

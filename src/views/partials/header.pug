@@ -1,10 +1,14 @@
-header.flex.justify-between.p-2.items-center
+header.flex.justify-between.items-center
   a(href="/")
     i.fab.fa-youtube.text-red-600.text-5xl
-  form(method="GET")
+  form(method="GET", action="/search")
     input(placeholder="검색", type="text", name="keyword").mr-2.h-10.rounded-md
     button.bg-gray-400.w-14.h-10.rounded-md
       i.fas.fa-search
+  div.flex.items-center
+    label(for="checkbox").inline-block.h-4.w-10.relative
+      input(type="checkbox", name="checkbox").hidden
+      div.slider.round
   ul.flex
     if loggedIn
       li.header__menu-icon

@@ -28,7 +28,15 @@ export const watch = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const video = await Video.findById(id).populate("owner").populate("comments");
+  const video = await Video.findById(id)
+    .populate("owner")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    });
   if (!video) {
     return res
       .status(HTTP_NOT_FOUND)
@@ -186,9 +194,67 @@ export const search = async (req, res) => {
   if (keyword) {
     videos = await Video.find({
       title: {
-        $regex: new RegExp(`${keyword} $`, "i"),
+        $regex: new RegExp(`${keyword}$`, "i"),
       },
     }).populate("owner");
+    console.log(videos);
   }
   return res.render("search", { pageTitle: "Search", videos });
+};
+
+export const registerView = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(HTTP_NOT_FOUND);
+  }
+  video.meta.views += 1;
+  await video.save();
+  return res.sendStatus(200);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    params: { id: video },
+    body: { text },
+    session: { user },
+  } = req;
+  const videoObj = await Video.findById(video);
+  if (!videoObj) return res.sendStatus(404);
+  const comment = await Comment.create({
+    text,
+    video,
+    author: user._id,
+  });
+  videoObj.comments.push(comment._id);
+  videoObj.save();
+  return res.sendStatus(201);
+};
+
+export const updateComment = async (req, res) => {
+  const {
+    params: { id: video },
+    body: { text },
+    session: { user },
+  } = req;
+  const videoObj = await Video.findById(video);
+  if (!videoObj) return res.sendStatus(404);
+  const comment = await Comment.create({
+    text,
+    video,
+    author: user._id,
+  });
+  videoObj.comments.push(comment._id);
+  videoObj.save();
+  return res.sendStatus(201);
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { commentId: comment },
+  } = req;
+  await Comment.findByIdAndDelete(comment);
+  return res.sendStatus(200);
 };

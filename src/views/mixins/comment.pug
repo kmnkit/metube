@@ -1,0 +1,30 @@
+mixin commentBox(comment,videoId)
+  div#comment__container(data-id=comment.id).flex.h-20.mt-10
+    if comment.author.avatarUrl
+      if isHeroku
+        img#avatar__box(src=comment.author.avatarUrl)
+      else
+        img#avatar__box(src="/"+comment.author.avatarUrl)
+    else
+      span(role="img").smile 😍
+    div.flex.justify-between.w-full.ml-2
+      div#comment__box
+        div.justify-self-start
+          span.font-bold #{comment.author.name} 
+          span=calcDate(comment.createdAt)
+          p#comment__text=comment.text
+      div#comment__menu.p-4
+        button
+          i.fas.fa-ellipsis-v
+        div.dropdown
+          if String(loggedInUser._id) === String(comment.author._id)
+            div#btn__comment-edit
+              i.fas.fa-pencil-alt
+              button(data-id=comment._id) 수정
+            div#btn__comment-del
+              i.fas.fa-trash-alt
+              button(data-id=comment._id) 삭제
+          else
+            div
+              i.fas.fa-flag
+              a(href="#") 신고

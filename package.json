@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/kmnkit/metube#readme",
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/typography": "^0.4.1",
     "aws-sdk": "^2.935.0",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.4.1",
@@ -36,7 +39,8 @@
     "multer-s3": "^2.9.0",
     "node-fetch": "^2.6.1",
     "pug": "^3.0.2",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "tailwindcss-children": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",
@@ -44,6 +48,7 @@
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.7",
     "autoprefixer": "^10.2.6",
+    "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
@@ -54,8 +59,10 @@
     "mini-css-extract-plugin": "^1.6.2",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.7",
+    "postcss-loader": "^6.1.0",
     "prettier": "^2.3.2",
     "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
     "style-loader": "^3.0.0",
     "tailwindcss": "^2.2.4",
     "webpack": "^5.40.0",

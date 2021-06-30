@@ -9,5 +9,5 @@ mixin video(video)
           span(role="img").text-5xl 😍
         div.video__info-text
           span=video.title
-          p=video.owner.username
+          p.line-clamp-2=video.owner.username
           p=calcDate(video.createdAt)

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  @apply bg-white dark:bg-gray-800 text-black dark:text-white;
+}
 .main__video-container{
   @apply w-1/4 h-40 mx-4;
   div:last-child {
@@ -10,7 +13,7 @@
 }
 
 .sidebar__li{
-  @apply text-xl text-black h-10 hover:bg-pink-600;
+  @apply text-xl h-10 hover:bg-pink-600;
   i{
     @apply mr-2;
   }  
@@ -62,4 +65,112 @@
     @apply font-bold;
   }
 }
+#timeSpace{
+  @apply md:visible;
+}
 
+#avatar__box{
+  @apply w-14 h-14 rounded-full bg-center;
+}
+
+#author__container{
+  @apply flex justify-between w-full items-center;
+  p{
+    @apply text-base;
+  }
+}
+#video__owner-menu,
+#comment__menu{
+  @apply overflow-hidden;
+  >button{
+    @apply w-4 h-10 rounded-xl flex items-center justify-center outline-none border-none;
+  }
+  &:hover .dropdown{
+    display:block;
+  }
+}
+
+.dropdown{
+  @apply hidden absolute w-8 h-4;
+  div{
+    @apply flex items-center w-24 h-12;
+    i, button{
+      @apply px-2;
+    }
+    button{
+      @apply w-full h-full text-white border-none outline-none;
+      &:hover{
+        @apply cursor-pointer;
+      }
+    }
+    &:hover{
+      @apply bg-pink-700;
+    }
+  }
+}
+.video__comments,
+.video__comment-form{
+  @apply w-full ml-4;
+}
+
+.video__comment-form{
+  @apply flex flex-col;
+  div{
+    @apply grid place-items-end mt-2;
+  };
+  textarea{
+    @apply w-full h-10 rounded-md text-black my-1 overflow-auto;
+  };
+}
+
+.video__comment-form{
+  @apply max-w-full;
+}
+
+video{
+  @apply bg-center bg-contain bg-black;
+}
+
+.comment__btn{
+  @apply w-24 h-10 bg-pink-600 text-white text-center justify-self-end rounded-md;
+}
+
+.slider{
+  transition: .4s;
+  @apply bg-gray-400 bottom-0 cursor-pointer left-0 absolute right-0 top-0;
+  &:before{
+    transition: .4s;
+    @apply bg-white bottom-1 h-12 left-1 absolute w-14;
+  }
+  &.round{
+    @apply rounded-3xl;
+    &:before{
+      @apply rounded-full;
+    }
+  }
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+#comment__container{
+  @apply flex;
+}
+
+#videoContainer{
+  #videoControls{
+    transition: opacity 0.5s ease-in-out;
+    @apply opacity-0 grid grid-cols-6 py-2 items-center bg-black text-white showing;
+    &.showing {
+      opacity: 1;
+    }
+  }
+}
+.expanded{
+  @apply w-full h-full;
+}

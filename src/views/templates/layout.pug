@@ -1,9 +1,11 @@
 doctype html
 html(lang="en")
-    include ../partials/head    
-    body.bg-pink-300.text-white
-        include ../partials/header
-        main.flex
-            block sidebar
-            block content            
-        include ../partials/footer
+  include ../partials/head    
+  body.h-screen.p-4
+    include ../partials/header
+    main.flex
+      block sidebar
+      block content            
+    include ../partials/footer
+  script(src="/static/js/main.js")
+  block scripts
