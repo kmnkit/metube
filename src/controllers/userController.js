@@ -13,7 +13,13 @@ const HTTP_BAD_REQUEST = 400;
  */
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
@@ -262,6 +268,7 @@ export const finishGithubLogin = async (req, res) => {
         location: userData.location,
       });
     }
+    console.log(`유저 = ${user}`);
     req.session.loggedIn = true;
     req.session.user = user;
     return res.redirect("/");
@@ -281,7 +288,7 @@ export const getChangePassword = (req, res) => {
     req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
-  return res.render(`${routes.users}${routes.changePw}`, {
+  return res.render("users/change-password", {
     pageTitle: "Change Password",
   });
 };

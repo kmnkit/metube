@@ -1,0 +1,14 @@
+extends ../templates/layout
+include ../mixins/video
+
+block content
+  div.flex.flex-col
+    if user.avatarUrl
+      div.w-full.flex
+        img(src="/" + user.avatarUrl).rounded-full.w-24.h-24
+        h3.ml-4=user.name
+    else
+      span(role="img") 😍
+    div.video-grid.p-4
+      each video in user.videos
+        +video(video)

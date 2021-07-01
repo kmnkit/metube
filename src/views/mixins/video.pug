@@ -1,13 +1,13 @@
+include avatar
 mixin video(video)
   div.main__video-container
     a(href=`/videos/${video.id}`)
-      div(style=`background-image:url(${video.thumbUrl}); background-size:cover; background-position:center;`).h-40.rounded-md
-      div.video__info
-        if video.owner.avatarUrl
-          div(style=`background-image:url(${video.owner.avatarUrl}); background-size:cover; background-position:center;`).rounded-full.w-14.h-14
-        else
-          span(role="img").text-5xl 😍
-        div.video__info-text
-          span=video.title
-          p.line-clamp-2=video.owner.username
+      div(style=`background-image:url(/${video.thumbUrl});`).w-auto.h-40.rounded-md.bg-cover.bg-center
+    div.video__info
+      a(href=`/users/${video.owner._id}`).w-full
+        +avatar(video.owner)
+      a(href=`/videos/${video.id}`).w-72
+        div.video__info-text.flex.flex-col.h-auto
+          span.overflow-ellipsis.break-words=video.title
+          p=video.owner.username
           p=calcDate(video.createdAt)

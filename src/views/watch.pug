@@ -1,5 +1,6 @@
 extends templates/layout
 include mixins/comment
+include mixins/avatar
 
 block content
   div.divide-y-3.divide-gray-100.max-w-screen-xl
@@ -13,7 +14,7 @@ block content
           i#playPause.fas.fa-2x.fa-play-circle
           div
             input(type="range",step="1", value=0, min="0")#timeline.w-full
-          span#timeSpace.invisible.text-center
+          span#timeSpace
             span#currentTime 00:00
             span  / 
             span#totalTime 00:00        
@@ -31,14 +32,8 @@ block content
     div#author__container.my-4.relative
       div.flex
         div.w-20.h-20
-          if video.owner.avatarUrl
-            a(href="/users/"+video.owner._id)
-              if isHeroku
-                img#avatar__box(src=video.owner.avatarUrl)
-              else
-                img#avatar__box(src="/"+video.owner.avatarUrl)
-          else
-            span(role="img").smile 😍
+          a(href="/users/"+video.owner._id)
+            +avatar(video.owner)
         div#uploader__info
           a(href=`/users/${video.owner._id}`)=video.owner.name            
           p #{video.owner.description}
@@ -58,12 +53,8 @@ block content
       if loggedIn
         div.flex.mt-4.w-full.h-20.pr-4
           div.w-14.h-14
-            if loggedInUser.avatarUrl
-              a(href="/users/"+loggedInUser._id).w-20.h-20
-                if isHeroku
-                  img#avatar__box(src=loggedInUser.atatarUrl)
-                else
-                  img#avatar__box(src="/"+loggedInUser.avatarUrl)
+            a(href="/users/"+loggedInUser._id).w-20.h-20
+              +avatar(loggedInUser)
           div.video__comments
             form.video__comment-form#commentForm
               textarea.max-w-screen-xl.w-full(placeholder="Write a nice comment...")

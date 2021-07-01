@@ -1,9 +1,8 @@
 extends templates/layout
 include mixins/video
-block sidebar
-  include partials/sidebar
 block content
-  each video in videos
-    +video(video)
-  else
-    span No Videos Found
+  div.video-grid.p-4
+    each video in videos
+      +video(video)
+    else
+      span.empty__message No Videos Found

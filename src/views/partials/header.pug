@@ -1,3 +1,5 @@
+include ../mixins/avatar
+
 header.flex.justify-between.items-center
   a(href="/")
     i.fab.fa-youtube.text-red-600.text-5xl
@@ -22,10 +24,7 @@ header.flex.justify-between.items-center
           i.fas.fa-sign-out-alt
       li.header__menu-icon
         a(href=`/users/${loggedInUser._id}`)
-          if loggedInUser.avatarUrl
-            img(src="/" + loggedInUser.avatarUrl).rounded-full.w-10.h-10
-          else
-            span.smile 😀
+          +avatar(loggedInUser)
     else
       li.header__menu-icon
         a(href="/login")
@@ -33,5 +32,3 @@ header.flex.justify-between.items-center
       li.header__menu-icon
         a(href="/join")
           i.fas.fa-user-plus
-      li
-        span.smile 😀

@@ -1,0 +1,11 @@
+mixin avatar(user)
+  if user.avatarUrl
+    if isHeroku
+      img#avatar__box(src=user.avatarUrl)
+    else
+      if user.socialOnly
+        img#avatar__box(src=user.avatarUrl)
+      else
+        img#avatar__box(src="/"+user.avatarUrl)
+  else
+    span(role="img").smile 😍

@@ -1,13 +1,10 @@
 extends templates/layout
-
+include mixins/avatar
 block content
   div.form__screen
     if errorMessage
       p=errorMessage
-    if loggedInUser.avatarUrl
-      img.header__avatar(src="/"+loggedInUser.avatarUrl, width="100", height="100")
-    else
-      span(role="img") 😀
+    +avatar(loggedInUser)
     form(method="POST", enctype="multipart/form-data").edit-profile__form
       label(for="avatar") Avatar
       input(type="file", id="avatar", name="avatar", accept="image/*")

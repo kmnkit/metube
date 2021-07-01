@@ -7,7 +7,7 @@
 ___
 
 ## Users
-- [ ] User Authentication(Login / Create Account)
+- [x] User Authentication(Login / Create Account)
 - [ ] Edit Profile / Change Password
 ---
 ## Videos
