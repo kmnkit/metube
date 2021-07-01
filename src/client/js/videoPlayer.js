@@ -130,6 +130,7 @@ const handleKeyDown = (event) => {
 };
 
 const handleDurationChange = (event) => {
+  console.log(event.target.duration);
   if (event.target.duration !== Infinity) {
     totalTime.innerText = formatTime(Math.floor(video.duration));
     timeline.max = Math.floor(video.duration);
