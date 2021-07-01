@@ -83,11 +83,11 @@ const handleFullscreen = () => {
   if (fullscreen) {
     document.exitFullscreen();
     video.className = "compressed";
-    fullScreenBtn.className = "fas fa-compress fa-2x";
+    fullScreenBtn.className = "fas fa-expand fa-2x";
   } else {
     videoContainer.requestFullscreen();
     video.className = "expanded";
-    fullScreenBtn.className = "fas fa-expand fa-2x";
+    fullScreenBtn.className = "fas fa-compress fa-2x";
   }
 };
 
@@ -129,6 +129,13 @@ const handleKeyDown = (event) => {
   }
 };
 
+const handleDurationChange = (event) => {
+  if (event.target.duration !== Infinity) {
+    totalTime.innerText = formatTime(Math.floor(video.duration));
+    timeline.max = Math.floor(video.duration);
+  }
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 soundBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
@@ -142,4 +149,5 @@ video.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("ended", handleEnded);
 video.addEventListener("ended", handleView);
 video.addEventListener("click", videoClick);
+video.addEventListener("durationchange", handleDurationChange);
 document.addEventListener("keydown", handleKeyDown);
