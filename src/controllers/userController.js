@@ -256,7 +256,7 @@ export const finishGithubLogin = async (req, res) => {
       req.flash("error", "Can't finish Github Login.");
       return res.redirect("/login");
     }
-    let user = await User.exists({ email: emailObj.email });
+    let user = await User.findOne({ email: emailObj.email });
     if (!user) {
       user = await User.create({
         name: userData.name,
@@ -267,10 +267,7 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location,
       });
-    } else {
-      user = await User.findOne({ email: emailObj.email, socialOnly: true });
     }
-    console.log(`유저 = ${user}`);
     req.session.loggedIn = true;
     req.session.user = user;
     return res.redirect("/");

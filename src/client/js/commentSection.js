@@ -7,7 +7,6 @@ const handleSubmit = async (event) => {
   const {
     dataset: { id: videoId },
   } = videoContainer;
-  console.log(videoId);
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
   if (text === "") return;
