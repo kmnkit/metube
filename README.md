@@ -1,6 +1,6 @@
 # metube
 
-## **Wetube Challenge Graduation Assignment**
+## **Metube Challenge Graduation Assignment**
 
 ## Assignment
 
@@ -8,12 +8,12 @@ ___
 
 ## Users
 - [x] User Authentication(Login / Create Account)
-- [ ] Edit Profile / Change Password
+- [x] Edit Profile / Change Password
 ---
 ## Videos
-- [ ] Video Upload
-- [ ] Video Search
-- [ ] Video Edit
-- [ ] Watch Video
-- [ ] Javascript Video Player
-- [ ] Comment Section + Code Challenge
+- [x] Video Upload
+- [x] Video Search
+- [x] Video Edit
+- [x] Watch Video
+- [x] Javascript Video Player
+- [x] Comment Section + Code Challenge
