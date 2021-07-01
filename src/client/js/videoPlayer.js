@@ -58,7 +58,7 @@ const handleVolumeChange = (event) => {
 };
 
 const formatTime = (seconds) =>
-  new Date(seconds * 1000).toISOString().substr(11, 8);
+  new Date(seconds * 1000).toISOString().substr(14, 5);
 
 const handleLoadedMetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
@@ -130,10 +130,9 @@ const handleKeyDown = (event) => {
 };
 
 const handleDurationChange = (event) => {
-  console.log(event.target.duration);
   if (event.target.duration !== Infinity) {
-    totalTime.innerText = formatTime(Math.floor(video.duration));
-    timeline.max = Math.floor(video.duration);
+    totalTime.innerText = formatTime(Math.floor(event.target.duration));
+    timeline.max = Math.floor(event.target.duration);
   }
 };
 

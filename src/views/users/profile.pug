@@ -5,7 +5,13 @@ block content
   div.flex.flex-col
     if user.avatarUrl
       div.w-full.flex
-        img(src="/" + user.avatarUrl).rounded-full.w-24.h-24
+        if isHeroku
+          img(src=user.avatarUrl).rounded-full.w-24.h-24
+        else
+          if user.socialOnly
+            img(src=user.avatarUrl).rounded-full.w-24.h-24
+          else
+            img(src="/" + user.avatarUrl).rounded-full.w-24.h-24
         h3.ml-4=user.name
     else
       span(role="img") 😍

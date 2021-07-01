@@ -194,3 +194,8 @@ video{
 .video-grid {
   @apply grid grid-cols-4 gap-12;
 }
+
+.sidebar__menu,
+.avatar__body{
+  @apply invisible lg:visible;
+}

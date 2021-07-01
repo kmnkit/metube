@@ -267,6 +267,8 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location,
       });
+    } else {
+      user = await User.findOne({ email: emailObj.email, socialOnly: true });
     }
     console.log(`유저 = ${user}`);
     req.session.loggedIn = true;
