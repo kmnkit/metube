@@ -2,7 +2,10 @@ include avatar
 mixin video(video)
   div.main__video-container
     a(href=`/videos/${video.id}`)
-      div(style=`background-image:url(/${video.thumbUrl});`).w-auto.h-40.rounded-md.bg-cover.bg-center
+      if isHeroku
+        img(src=video.thumbUrl).w-60.h-40.rounded-md.bg-cover.bg-center
+      else
+        img(src="/"+video.thumbUrl).w-60.h-40.rounded-md.bg-cover.bg-center
     div.video__info
       a(href=`/users/${video.owner._id}`).w-full
         +avatar(video.owner)
